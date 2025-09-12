@@ -1,18 +1,22 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MainMenu : MonoBehaviour
+
+public class MainMenu : MonoBehaviour, IPointerEnterHandler
 {
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
-  void Start()
-  {
+  public GameObject selectionSpotLight;
 
+  public void OnPointerEnter(PointerEventData eventData)
+  {
+    if (selectionSpotLight != null)
+    {
+      // Move the spotlight to the y position of the hovered button
+      Vector3 newPosition = selectionSpotLight.transform.position;
+      newPosition.y = eventData.pointerEnter.transform.position.y;
+      selectionSpotLight.transform.position = newPosition;
+    }
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
   public void PlayGame(string mode)
   {
 
