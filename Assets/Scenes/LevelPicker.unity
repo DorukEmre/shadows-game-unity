@@ -491,7 +491,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &5008158053792574321
+--- !u!1001 &1864522096
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -501,11 +501,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5648756414865902169, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 5648756414865902169, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5648756414865902169, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -539,6 +539,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6454901324895931791, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_text
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
       value: Level Box
@@ -546,10 +550,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3507971827448378853, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -557,6 +558,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1229571791}
   - {fileID: 1620844410}
-  - {fileID: 5008158053792574321}
   - {fileID: 313196828}
   - {fileID: 1142094890}
+  - {fileID: 1864522096}
