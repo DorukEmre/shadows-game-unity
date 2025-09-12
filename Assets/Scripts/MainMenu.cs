@@ -22,7 +22,15 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
 
     Debug.Log("Game mode selected: " + mode);
 
-    PlayerPrefs.SetString("GameMode", mode);
+    // PlayerPrefs.SetString("GameMode", mode);
+    if (mode == "test")
+    {
+      GameManager.Instance.levelsCompleted = new bool[10] { true, true, true, true, true, true, true, true, true, true };
+    }
+    else
+    {
+      GameManager.Instance.levelsCompleted = new bool[10] { false, false, false, false, false, false, false, false, false, false };
+    }
     UnityEngine.SceneManagement.SceneManager.LoadScene("LevelPicker");
   }
 
