@@ -1,16 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 /// <summary>
 /// Changes the color and light state of a level box based on completion status.
+/// Loads corresponding scene on click.
 /// 
 /// levelNumber (assigned by user in the interface) is applied to the TextMeshProUGUI component.
 /// Relevant Material is assigned to renderer of the "Body" child (Cube).
 /// Light component is toggled on/off based on completion status.
+/// Hint text (assigned by user in the interface) is shown/hidden on hover.
 /// </summary>
 [ExecuteAlways]
-public class LevelBoxColorChanger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class LevelPickerBox
+  : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
   public int levelNumber;
   [SerializeField] private TextMeshProUGUI levelNumberTextComponent;
@@ -126,5 +130,11 @@ public class LevelBoxColorChanger : MonoBehaviour, IPointerEnterHandler, IPointe
     {
       hintTextComponent.enabled = false;
     }
+  }
+
+  public void LoadLevel()
+  {
+    string sceneName = "Level " + levelNumber;
+    SceneManager.LoadScene(sceneName);
   }
 }

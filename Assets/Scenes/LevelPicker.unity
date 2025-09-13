@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 308781338}
     m_Modifications:
+    - target: {fileID: 917965811780640051, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3728175418944671589, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: levelNumber
       value: 4
@@ -173,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6454901324895931791, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_text
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
@@ -182,7 +186,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8697235937597711152, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
 --- !u!4 &289750440 stripped
 Transform:
@@ -311,6 +318,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 308781338}
     m_Modifications:
+    - target: {fileID: 917965811780640051, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3728175418944671589, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: levelNumber
       value: 2
@@ -355,6 +366,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6454901324895931791, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
       value: Level Box (1)
@@ -362,7 +377,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8697235937597711152, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
 --- !u!4 &575499174 stripped
 Transform:
@@ -377,6 +395,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 308781338}
     m_Modifications:
+    - target: {fileID: 917965811780640051, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3728175418944671589, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: levelNumber
       value: 3
@@ -423,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6454901324895931791, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_text
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
@@ -432,7 +454,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8697235937597711152, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
 --- !u!4 &725495375 stripped
 Transform:
@@ -447,6 +472,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 308781338}
     m_Modifications:
+    - target: {fileID: 917965811780640051, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3728175418944671589, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: levelNumber
       value: 1
@@ -491,6 +520,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6021524386114296690, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021524386114296690, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021524386114296690, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6454901324895931791, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      propertyPath: m_text
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
       value: Level Box
@@ -498,7 +543,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8697235937597711152, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
 --- !u!4 &759425847 stripped
 Transform:
