@@ -22,10 +22,9 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
 
     Debug.Log("Game mode selected: " + mode);
 
-    // PlayerPrefs.SetString("GameMode", mode);
     if (mode == "test")
     {
-      GameManager.Instance.levelsCompleted = new bool[10] { true, true, true, true, true, true, true, true, true, true };
+      GameManager.Instance.levelsCompleted = new bool[10] { false, true, false, true, false, true, true, true, true, true };
     }
     else
     {
