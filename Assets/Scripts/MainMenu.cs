@@ -24,11 +24,15 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
 
     if (mode == "test")
     {
-      GameManager.Instance.levelsCompleted = new bool[10] { false, true, false, true, false, true, true, true, true, true };
+      GameManager.Instance.levelStates = new LevelState[10] { LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked };
     }
-    else
+    else if (mode == "normal")
     {
-      GameManager.Instance.levelsCompleted = new bool[10] { false, false, false, false, false, false, false, false, false, false };
+      GameManager.Instance.levelStates = new LevelState[10] { LevelState.Unlocked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked };
+    }
+    else // continue
+    {
+      GameManager.Instance.levelStates = new LevelState[10] { LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Locked };
     }
     UnityEngine.SceneManagement.SceneManager.LoadScene("LevelPicker");
   }

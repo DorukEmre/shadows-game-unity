@@ -1,9 +1,11 @@
 using UnityEngine;
 
+public enum LevelState { Locked, Unlocked, Completed }
+
 public class GameManager : MonoBehaviour
 {
   public static GameManager Instance;
-  public bool[] levelsCompleted = new bool[10];
+  public LevelState[] levelStates = new LevelState[10];
 
   void Awake()
   {

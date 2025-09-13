@@ -20,7 +20,8 @@ public class LevelPickerBox
   [SerializeField] private TextMeshProUGUI levelNumberTextComponent;
   private Renderer levelBoxRenderer;
   [SerializeField] private Material completedMaterial;
-  [SerializeField] private Material defaultMaterial;
+  [SerializeField] private Material lockedMaterial;
+  [SerializeField] private Material unlockedMaterial;
 
   private Light boxLight;
 
@@ -76,7 +77,7 @@ public class LevelPickerBox
       Debug.LogError("hintTextComponent reference not assigned in the Inspector");
     }
 
-    UpdateLevelBox();
+    AssignState();
   }
 
   void OnValidate()
@@ -93,26 +94,31 @@ public class LevelPickerBox
     }
   }
 
-  void UpdateLevelBox()
+  void AssignState()
   {
     // Set the material and light based on level completion status
-    if (GameManager.Instance != null && GameManager.Instance.levelsCompleted != null)
+    if (GameManager.Instance != null && GameManager.Instance.levelStates != null)
     {
       int levelIndex = levelNumber - 1;
-      if (levelIndex < GameManager.Instance.levelsCompleted.Length && GameManager.Instance.levelsCompleted[levelIndex])
+      if (levelIndex < GameManager.Instance.levelStates.Length && GameManager.Instance.levelStates[levelIndex] == LevelState.Completed)
       {
         levelBoxRenderer.material = completedMaterial;
         boxLight.enabled = true;
       }
+      else if (levelIndex < GameManager.Instance.levelStates.Length && GameManager.Instance.levelStates[levelIndex] == LevelState.Unlocked)
+      {
+        levelBoxRenderer.material = unlockedMaterial;
+        boxLight.enabled = false;
+      }
       else
       {
-        levelBoxRenderer.material = defaultMaterial;
+        levelBoxRenderer.material = lockedMaterial;
         boxLight.enabled = false;
       }
     }
     else
     {
-      Debug.LogError("GameManager or levelsCompleted array is not properly set up");
+      Debug.LogError("GameManager or levelStates array is not properly set up");
     }
   }
 
@@ -134,7 +140,11 @@ public class LevelPickerBox
 
   public void LoadLevel()
   {
-    string sceneName = "Level " + levelNumber;
-    SceneManager.LoadScene(sceneName);
+
+    if (GameManager.Instance.levelStates[levelNumber - 1] != LevelState.Locked)
+    {
+      string sceneName = "Level " + levelNumber;
+      SceneManager.LoadScene(sceneName);
+    }
   }
 }

@@ -74,8 +74,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -533,7 +533,8 @@ MonoBehaviour:
   levelNumber: 0
   levelNumberTextComponent: {fileID: 6454901324895931791}
   completedMaterial: {fileID: 2100000, guid: d48e9c05495243b9da61e79e381b1800, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: 751faffca71ae5fc19822206e8ae1c98, type: 2}
+  lockedMaterial: {fileID: 2100000, guid: 5e773af04f40694cf80ea51082a6de9a, type: 2}
+  unlockedMaterial: {fileID: 2100000, guid: 751faffca71ae5fc19822206e8ae1c98, type: 2}
   hint: Hint text
   hintTextComponent: {fileID: 917965811780640051}
 --- !u!1 &8334225439862319744
@@ -580,7 +581,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 5
   m_Range: 2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -778,7 +779,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
