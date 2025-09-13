@@ -7,14 +7,15 @@ public class RotateY : MonoBehaviour
   public float rotationSpeed = 1f;
   private bool isDragging = false;
   private bool hasWon = false;
+  private GameObject levelMenu;
 
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-
+    levelMenu = GameObject.FindGameObjectWithTag("LevelMenu");
+    if (levelMenu != null)
+      levelMenu.SetActive(false);
   }
 
-  // Update is called once per frame
   void Update()
   {
     if (Mouse.current == null || hasWon)
@@ -64,8 +65,18 @@ public class RotateY : MonoBehaviour
   void Victory()
   {
     Debug.Log("You won!");
-    // show victory panel with victory message and buttons to main menu or quit
+    // Move camera
     Camera.main.GetComponent<CameraMover>().MoveToVictory();
+
+    // Show victory panel with victory message and buttons to main menu or quit
+    if (levelMenu != null)
+    {
+      levelMenu.SetActive(true);
+    }
+    else
+    {
+      Debug.LogError("LevelMenu not found in the scene.");
+    }
 
     // update level completion status in GameManager
 
