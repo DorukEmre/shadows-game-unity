@@ -6,6 +6,7 @@ public class RotateY : MonoBehaviour
 
   public float rotationSpeed = 1f;
   private bool isDragging = false;
+  private bool hasWon = false;
 
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
@@ -16,7 +17,7 @@ public class RotateY : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    if (Mouse.current == null)
+    if (Mouse.current == null || hasWon)
       return;
 
     // On mouse button down, check if the object is under the cursor
@@ -45,7 +46,8 @@ public class RotateY : MonoBehaviour
       || (finalYRotation > 355 && finalYRotation < 360)
       || (finalYRotation > 175 && finalYRotation < 185))
       {
-        Debug.Log("You won!");
+        hasWon = true;
+        Victory();
       }
     }
 
@@ -57,5 +59,15 @@ public class RotateY : MonoBehaviour
       Debug.Log("Current Y Rotation: " + transform.rotation.eulerAngles.y);
       transform.Rotate(0, mouseX * rotationSpeed, 0);
     }
+  }
+
+  void Victory()
+  {
+    Debug.Log("You won!");
+    // show victory panel with victory message and buttons to main menu or quit
+    Camera.main.GetComponent<CameraMover>().MoveToVictory();
+
+    // update level completion status in GameManager
+
   }
 }
