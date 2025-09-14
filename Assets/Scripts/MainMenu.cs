@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
     {
       GameManager.Instance.levelStates = new LevelState[10] { LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Locked };
     }
-    UnityEngine.SceneManagement.SceneManager.LoadScene("LevelPicker");
+    UnityEngine.SceneManagement.SceneManager.LoadScene("LevelsMap");
   }
 
   public void QuitGame()

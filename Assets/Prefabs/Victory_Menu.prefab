@@ -1217,7 +1217,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3126711482798522901}
         m_TargetAssemblyTypeName: LevelMenus, Assembly-CSharp
-        m_MethodName: LoadLevels
+        m_MethodName: LoadLevelsMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

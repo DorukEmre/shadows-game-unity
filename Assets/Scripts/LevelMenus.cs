@@ -3,10 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelMenus : MonoBehaviour
 {
-  public void LoadLevels()
+  public void LoadLevelsMap()
   {
-    Debug.Log("Loading Level Picker Scene");
-    // SceneManager.LoadScene("LevelPicker");
+    Debug.Log("Loading LevelsMap Scene");
+    SceneManager.LoadScene("LevelsMap");
   }
 
   public void QuitGame()
