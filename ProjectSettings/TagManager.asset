@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SelectionSpotLight
   - LevelMenu
+  - SpotLight
   layers:
   - Default
   - TransparentFX

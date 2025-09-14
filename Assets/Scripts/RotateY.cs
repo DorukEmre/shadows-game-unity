@@ -66,19 +66,31 @@ public class RotateY : MonoBehaviour
   {
     Debug.Log("You won!");
     // Move camera
-    Camera.main.GetComponent<CameraMover>().MoveToVictory();
+    Camera.main.GetComponent<CameraMover>().MoveToWall();
 
     // Show victory panel with victory message and buttons to main menu or quit
-    if (levelMenu != null)
-    {
-      levelMenu.SetActive(true);
-    }
-    else
-    {
-      Debug.LogError("LevelMenu not found in the scene.");
-    }
+    levelMenu.SetActive(true);
 
-    // update level completion status in GameManager
+    // Flicker light and make ring larger
+    GameObject spotLight = GameObject.FindGameObjectWithTag("SpotLight");
+    Light spot = spotLight.GetComponent<Light>();
+    StartCoroutine(FlickerLight(spot));
+    spot.spotAngle = 28f;
 
+    // Update level completion status in GameManager
+
+  }
+
+  private System.Collections.IEnumerator FlickerLight(Light spot, float duration = 1f)
+  {
+    float originalIntensity = spot.intensity;
+    float timer = 0f;
+    while (timer < duration)
+    {
+      spot.intensity = Random.Range(5f, 22f);
+      yield return new WaitForSeconds(Random.Range(0.02f, 0.1f));
+      timer += Time.deltaTime;
+    }
+    spot.intensity = originalIntensity;
   }
 }

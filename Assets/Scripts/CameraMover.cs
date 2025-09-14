@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class CameraMover : MonoBehaviour
 {
-  public void MoveToVictory()
+  public void MoveToWall(float duration = 1f)
   {
     Vector3 targetPosition = new Vector3(0f, 1f, -0.25f);
     Quaternion targetRotation = Quaternion.Euler(0f, 180f, 0f);
-    float duration = 1f; // seconds
     StartCoroutine(MoveToTarget(targetPosition, targetRotation, duration));
   }
 
