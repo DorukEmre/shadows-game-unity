@@ -5,8 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - SelectionSpotLight
-  - LevelMenu
   - SpotLight
+  - VictoryMenu
+  - RotatableObject
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

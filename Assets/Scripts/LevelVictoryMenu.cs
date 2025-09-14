@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelMenus : MonoBehaviour
+public class LevelVictoryMenu : MonoBehaviour
 {
   public void LoadLevelsMap()
   {

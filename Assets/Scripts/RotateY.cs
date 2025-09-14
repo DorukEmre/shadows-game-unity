@@ -7,18 +7,36 @@ public class RotateY : MonoBehaviour
   public float rotationSpeed = 1f;
   private bool isDragging = false;
   private bool hasWon = false;
-  private GameObject levelMenu;
+  private GameObject victoryMenu;
+  private GameObject pauseMenu;
 
   void Start()
   {
-    levelMenu = GameObject.FindGameObjectWithTag("LevelMenu");
-    if (levelMenu != null)
-      levelMenu.SetActive(false);
+    victoryMenu = GameObject.FindGameObjectWithTag("VictoryMenu");
+    if (victoryMenu != null)
+      victoryMenu.SetActive(false);
+
+    pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
+    if (pauseMenu != null)
+      pauseMenu.SetActive(false);
   }
 
   void Update()
   {
     if (Mouse.current == null || hasWon)
+      return;
+
+    // Toggle esc menu visibility on esc key press
+    if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+    {
+      pauseMenu.SetActive(!pauseMenu.activeSelf);
+      if (pauseMenu.activeSelf)
+      {
+        pauseMenu.GetComponent<LevelPauseMenu>().SlideInBars();
+      }
+    }
+
+    if (pauseMenu.activeSelf) // Check if escape menu is active (game paused)
       return;
 
     // On mouse button down, check if the object is under the cursor
@@ -67,24 +85,27 @@ public class RotateY : MonoBehaviour
     Debug.Log("You won!");
     // Update level completion status in GameManager
     var gm = GameManager.Instance;
-    if (gm.levelStates[gm.currentLevelIndex] != LevelState.Completed)
+    if (gm != null)
     {
-      gm.levelStates[gm.currentLevelIndex] = LevelState.Completed;
-      gm.newlyCompletedIndex = gm.currentLevelIndex;
-    }
+      if (gm.levelStates[gm.currentLevelIndex] != LevelState.Completed)
+      {
+        gm.levelStates[gm.currentLevelIndex] = LevelState.Completed;
+        gm.newlyCompletedIndex = gm.currentLevelIndex;
+      }
 
-    if (gm.currentLevelIndex + 1 < gm.levelStates.Length
-        && gm.levelStates[gm.currentLevelIndex + 1] == LevelState.Locked)
-    {
-      gm.levelStates[gm.currentLevelIndex + 1] = LevelState.Unlocked;
-      gm.newlyUnlockedIndex = gm.currentLevelIndex + 1;
+      if (gm.currentLevelIndex + 1 < gm.levelStates.Length
+          && gm.levelStates[gm.currentLevelIndex + 1] == LevelState.Locked)
+      {
+        gm.levelStates[gm.currentLevelIndex + 1] = LevelState.Unlocked;
+        gm.newlyUnlockedIndex = gm.currentLevelIndex + 1;
+      }
     }
 
     // Move camera
     Camera.main.GetComponent<CameraMover>().MoveToWall();
 
     // Show victory panel with victory message and buttons to main menu or quit
-    levelMenu.SetActive(true);
+    victoryMenu.SetActive(true);
 
     // Flicker light and make ring larger
     GameObject spotLight = GameObject.FindGameObjectWithTag("SpotLight");

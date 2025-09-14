@@ -16,7 +16,7 @@ public class CameraMover : MonoBehaviour
     float elapsed = 0f;
     while (elapsed < duration)
     {
-      float t = elapsed / duration;
+      float t = Mathf.SmoothStep(0, 1, elapsed / duration);
       transform.position = Vector3.Lerp(startPosition, targetPosition, t);
       transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
       elapsed += Time.deltaTime;
