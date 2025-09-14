@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LevelsMap : MonoBehaviour
 {
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
+
   void Start()
   {
     if (GameManager.Instance != null && GameManager.Instance.levelStates != null)
@@ -18,14 +18,7 @@ public class LevelsMap : MonoBehaviour
     else
     {
       Debug.LogError("GameManager or levelStates array is not properly set up");
-
     }
-
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
 }

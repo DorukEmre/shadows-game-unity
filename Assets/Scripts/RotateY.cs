@@ -43,9 +43,9 @@ public class RotateY : MonoBehaviour
       Debug.Log("Mouse Button Released");
       isDragging = false;
       float finalYRotation = transform.rotation.eulerAngles.y;
-      if ((finalYRotation > 0 && finalYRotation < 5)
-      || (finalYRotation > 355 && finalYRotation < 360)
-      || (finalYRotation > 175 && finalYRotation < 185))
+      if ((finalYRotation > 0 && finalYRotation < 10)
+      || (finalYRotation > 350 && finalYRotation < 360)
+      || (finalYRotation > 170 && finalYRotation < 190))
       {
         hasWon = true;
         Victory();
@@ -65,6 +65,21 @@ public class RotateY : MonoBehaviour
   void Victory()
   {
     Debug.Log("You won!");
+    // Update level completion status in GameManager
+    var gm = GameManager.Instance;
+    if (gm.levelStates[gm.currentLevelIndex] != LevelState.Completed)
+    {
+      gm.levelStates[gm.currentLevelIndex] = LevelState.Completed;
+      gm.newlyCompletedIndex = gm.currentLevelIndex;
+    }
+
+    if (gm.currentLevelIndex + 1 < gm.levelStates.Length
+        && gm.levelStates[gm.currentLevelIndex + 1] == LevelState.Locked)
+    {
+      gm.levelStates[gm.currentLevelIndex + 1] = LevelState.Unlocked;
+      gm.newlyUnlockedIndex = gm.currentLevelIndex + 1;
+    }
+
     // Move camera
     Camera.main.GetComponent<CameraMover>().MoveToWall();
 
@@ -76,8 +91,6 @@ public class RotateY : MonoBehaviour
     Light spot = spotLight.GetComponent<Light>();
     StartCoroutine(FlickerLight(spot));
     spot.spotAngle = 28f;
-
-    // Update level completion status in GameManager
 
   }
 

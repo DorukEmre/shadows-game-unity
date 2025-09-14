@@ -16,15 +16,17 @@ using TMPro;
 public class LevelPickerBox
   : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+  private GameManager gm = GameManager.Instance;
+
   public int levelNumber;
   [SerializeField] private TextMeshProUGUI levelNumberTextComponent;
+
   private Renderer levelBoxRenderer;
   [SerializeField] private Material completedMaterial;
   [SerializeField] private Material lockedMaterial;
   [SerializeField] private Material unlockedMaterial;
 
   private Light boxLight;
-
 
   public string hint;
   [SerializeField] private TextMeshPro hintTextComponent;
@@ -82,31 +84,46 @@ public class LevelPickerBox
 
   void OnValidate()
   {
-    // Runs after a value change in the Inspector
     if (levelNumberTextComponent != null)
-    {
       levelNumberTextComponent.text = levelNumber.ToString();
-    }
 
     if (hintTextComponent != null)
-    {
       hintTextComponent.text = hint;
-    }
   }
 
   void AssignState()
   {
     // Set the material and light based on level completion status
-    if (GameManager.Instance != null && GameManager.Instance.levelStates != null)
+    if (gm != null && gm.levelStates != null)
     {
       int levelIndex = levelNumber - 1;
-      if (levelIndex < GameManager.Instance.levelStates.Length && GameManager.Instance.levelStates[levelIndex] == LevelState.Completed)
+      if (levelIndex >= gm.levelStates.Length)
       {
+        Debug.LogError("Level index out of bounds: " + levelIndex);
+        return;
+      }
+
+      if (gm.levelStates[levelIndex] == LevelState.Completed)
+      {
+        if (levelIndex == gm.newlyCompletedIndex && gm.newlyCompletedIndex >= 0)
+        {
+          levelBoxRenderer.material = unlockedMaterial;
+          boxLight.enabled = false;
+          gm.newlyCompletedIndex = -1;
+          StartCoroutine(NewlyCompletedEffect());
+        }
         levelBoxRenderer.material = completedMaterial;
         boxLight.enabled = true;
       }
-      else if (levelIndex < GameManager.Instance.levelStates.Length && GameManager.Instance.levelStates[levelIndex] == LevelState.Unlocked)
+      else if (gm.levelStates[levelIndex] == LevelState.Unlocked)
       {
+        if (levelIndex == gm.newlyUnlockedIndex && gm.newlyUnlockedIndex >= 0)
+        {
+          levelBoxRenderer.material = lockedMaterial;
+          boxLight.enabled = false;
+          gm.newlyUnlockedIndex = -1;
+          StartCoroutine(NewlyUnlockedEffect());
+        }
         levelBoxRenderer.material = unlockedMaterial;
         boxLight.enabled = false;
       }
@@ -122,28 +139,55 @@ public class LevelPickerBox
     }
   }
 
+  private System.Collections.IEnumerator NewlyCompletedEffect(float duration = 1f)
+  {
+    Vector3 originalScale = transform.localScale;
+    Vector3 targetScale = originalScale * 1.2f;
+    float elapsed = 0f;
+    while (elapsed < duration)
+    {
+      float t = elapsed / duration;
+      transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+    transform.localScale = originalScale;
+  }
+
+  private System.Collections.IEnumerator NewlyUnlockedEffect(float duration = 1f)
+  {
+    Vector3 originalScale = transform.localScale;
+    Vector3 targetScale = originalScale * 1.2f;
+    float elapsed = 0f;
+    while (elapsed < duration)
+    {
+      float t = elapsed / duration;
+      transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+      elapsed += Time.deltaTime;
+      yield return null;
+    }
+    transform.localScale = originalScale;
+  }
+
   public void OnPointerEnter(PointerEventData eventData)
   {
     if (hintTextComponent != null)
-    {
       hintTextComponent.enabled = true;
-    }
   }
 
   public void OnPointerExit(PointerEventData eventData)
   {
     if (hintTextComponent != null)
-    {
       hintTextComponent.enabled = false;
-    }
   }
 
   public void LoadLevel()
   {
 
-    if (GameManager.Instance.levelStates[levelNumber - 1] != LevelState.Locked)
+    if (gm.levelStates[levelNumber - 1] != LevelState.Locked)
     {
       string sceneName = "Level " + levelNumber;
+      gm.currentLevelIndex = levelNumber - 1;
       SceneManager.LoadScene(sceneName);
     }
   }
