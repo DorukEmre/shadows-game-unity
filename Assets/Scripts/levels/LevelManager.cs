@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
 
   public static event System.Action OnInteractionAllowed;
 
-  public void WinLevel()
+  public void TriggerWin()
   {
     hasWon = true;
 
