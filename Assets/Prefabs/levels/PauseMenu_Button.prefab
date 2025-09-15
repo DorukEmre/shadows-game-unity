@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 8128895537737368337}
   - component: {fileID: 2272851257249212732}
   m_Layer: 0
-  m_Name: EscMenu_Button
+  m_Name: PauseMenu_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

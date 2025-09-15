@@ -14,7 +14,23 @@ public class LevelPauseMenu : MonoBehaviour
   private Vector2 startPosBottomBar;
   private Vector2 targetPosBottomBar;
 
-  void Start()
+  public void SlideInBars()
+  {
+    // Slide in animation for top and bottom bars
+
+    if (topBarRect == null || bottomBarRect == null)
+    {
+      GetBarPositions();
+    }
+
+    topBarRect.anchoredPosition = startPosTopBar;
+    StartCoroutine(SlideInAnimation(topBarRect, startPosTopBar, targetPosTopBar, 0.5f));
+
+    bottomBarRect.anchoredPosition = startPosBottomBar;
+    StartCoroutine(SlideInAnimation(bottomBarRect, startPosBottomBar, targetPosBottomBar, 0.5f));
+  }
+
+  void GetBarPositions()
   {
     topBarRect = topBar.GetComponent<RectTransform>();
     targetPosTopBar = topBarRect.anchoredPosition;
@@ -23,16 +39,6 @@ public class LevelPauseMenu : MonoBehaviour
     bottomBarRect = bottomBar.GetComponent<RectTransform>();
     targetPosBottomBar = bottomBarRect.anchoredPosition;
     startPosBottomBar = new Vector2(targetPosBottomBar.x, -targetPosBottomBar.y);
-  }
-
-  public void SlideInBars()
-  {
-    // Slide in animation for top and bottom bars
-    topBarRect.anchoredPosition = startPosTopBar;
-    StartCoroutine(SlideInAnimation(topBarRect, startPosTopBar, targetPosTopBar, 0.5f));
-
-    bottomBarRect.anchoredPosition = startPosBottomBar;
-    StartCoroutine(SlideInAnimation(bottomBarRect, startPosBottomBar, targetPosBottomBar, 0.5f));
   }
 
   private System.Collections.IEnumerator SlideInAnimation(RectTransform barRect, Vector2 startPos, Vector2 targetPos, float duration)
@@ -69,6 +75,7 @@ public class LevelPauseMenu : MonoBehaviour
     {
       obj.ResetPosition();
     }
+    gameObject.SetActive(false);
   }
 
   public void QuitGame()
