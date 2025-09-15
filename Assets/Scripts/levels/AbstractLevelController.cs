@@ -49,6 +49,9 @@ public abstract class AbstractLevelController : MonoBehaviour
     {
       Debug.Log("Mouse Button Released");
       isDragging = false;
+
+      Debug.Log(transform.rotation.eulerAngles);
+
     }
   }
 
@@ -62,16 +65,31 @@ public abstract class AbstractLevelController : MonoBehaviour
 
   protected void RotateYIfDragging()
   {
-    // Only rotate if dragging this object
     if (isDragging && Mouse.current.leftButton.isPressed)
     {
       float mouseX = Mouse.current.delta.ReadValue().x;
-      // Debug.Log("Rotating: " + Mouse.current.delta.ReadValue() + ", mouseX: " + mouseX);
-      Debug.Log("Current Y Rotation: " + transform.rotation.eulerAngles.y);
-      transform.Rotate(0, mouseX * rotationSpeed, 0);
+      transform.Rotate(Vector3.up, mouseX * rotationSpeed, Space.World);
+    }
+  }
+
+  protected void RotateXAndYIfDragging()
+  {
+    if (isDragging && Mouse.current.leftButton.isPressed)
+    {
+      if (Keyboard.current != null && Keyboard.current.leftCtrlKey.isPressed)
+      {
+        float mouseY = Mouse.current.delta.ReadValue().y;
+        transform.Rotate(Vector3.right, -mouseY * rotationSpeed, Space.World);
+      }
+      else
+      {
+        float mouseX = Mouse.current.delta.ReadValue().x;
+        transform.Rotate(Vector3.up, mouseX * rotationSpeed, Space.World);
+      }
     }
   }
 
   protected abstract void EnableInteraction();
   protected abstract void IsWinConditionMet();
+
 }
