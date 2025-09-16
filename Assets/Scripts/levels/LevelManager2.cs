@@ -1,26 +1,24 @@
 using UnityEngine;
 
-public class Level2 : AbstractLevelController
+public class LevelManager2 : AbstractLevelManager
 {
+  private GameObject levelObject;
 
-  protected override void EnableInteraction()
+  protected override void Start()
   {
-    CheckMouseButtonPressed();
+    base.Start();
 
-    CheckMouseButtonReleased();
-
-    CheckWin();
-
-    // Can rotate on X and Y axis
-    ManipulateIfDragging(true);
+    if (levelObjects.Length > 0)
+      levelObject = levelObjects[0];
+    else
+      Debug.LogError("No level objects assigned in LevelManager.");
   }
 
   protected override void IsWinConditionMet()
   {
-    bool isNowMet = false;
-    float x = transform.rotation.eulerAngles.x;
-    float y = transform.rotation.eulerAngles.y;
-    float z = transform.rotation.eulerAngles.z;
+    float x = levelObject.transform.rotation.eulerAngles.x;
+    float y = levelObject.transform.rotation.eulerAngles.y;
+    float z = levelObject.transform.rotation.eulerAngles.z;
 
     // Win conditions:
     // (x), (90 || 270), (90 || 270) 
@@ -35,10 +33,7 @@ public class Level2 : AbstractLevelController
         || ((Is(x, 90) || Is(x, 270)) && (Is(y, 0) || Is(y, 180)) && (Is(z, 0) || Is(z, 180)))
       )
     {
-      isNowMet = true;
+      TriggerWin();
     }
-
-    NotifyWinConditionMet(isNowMet);
   }
-
 }

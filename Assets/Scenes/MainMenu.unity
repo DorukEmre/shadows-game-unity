@@ -290,6 +290,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   levelStates: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  currentLevelIndex: -1
+  newlyCompletedIndex: -1
+  newlyUnlockedIndex: -1
 --- !u!4 &197546142
 Transform:
   m_ObjectHideFlags: 0
@@ -742,34 +745,6 @@ PrefabInstance:
     - target: {fileID: 1844579977214153756, guid: 469dede73105f5f799b1549f2e170532, type: 3}
       propertyPath: m_Name
       value: Room
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819124314121449855, guid: 469dede73105f5f799b1549f2e170532, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.114692435
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819124314121449855, guid: 469dede73105f5f799b1549f2e170532, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.3243605
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819124314121449855, guid: 469dede73105f5f799b1549f2e170532, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.024711918
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819124314121449855, guid: 469dede73105f5f799b1549f2e170532, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9428784
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819124314121449855, guid: 469dede73105f5f799b1549f2e170532, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.07183305
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819124314121449855, guid: 469dede73105f5f799b1549f2e170532, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 8.713
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819124314121449855, guid: 469dede73105f5f799b1549f2e170532, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 142.032
       objectReference: {fileID: 0}
     - target: {fileID: 6392817545063964123, guid: 469dede73105f5f799b1549f2e170532, type: 3}
       propertyPath: m_LocalRotation.w

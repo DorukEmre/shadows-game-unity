@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class AbstractLevelController : MonoBehaviour
+public abstract class AbstractObjectController : MonoBehaviour
 {
-  protected LevelManager lm;
+  protected AbstractLevelManager lm;
   protected float rotationSpeed = 1f;
   protected bool isDragging = false;
 
@@ -12,26 +12,27 @@ public abstract class AbstractLevelController : MonoBehaviour
   [SerializeField] protected float minY = 1f;
   [SerializeField] protected float maxY = 1f;
 
-  public event System.Action<AbstractLevelController> OnWinConditionMet;
-  public event System.Action<AbstractLevelController> OnWinConditionLost;
+  public event System.Action<AbstractObjectController> OnCheckWinCondition;
+  // public event System.Action<AbstractObjectController> OnWinConditionMet;
+  // public event System.Action<AbstractObjectController> OnWinConditionLost;
 
-  protected virtual void Start()
+  void Start()
   {
-    lm = LevelManager.Instance;
+    lm = AbstractLevelManager.Instance;
     if (lm != null)
-      lm.RegisterLevelController(this);
+      lm.RegisterObjectController(this);
     else
       Debug.LogError("LevelManager instance not found.");
   }
 
   protected void OnEnable()
   {
-    LevelManager.OnInteractionAllowed += EnableInteraction;
+    AbstractLevelManager.OnInteractionAllowed += EnableInteraction;
   }
 
   protected void OnDisable()
   {
-    LevelManager.OnInteractionAllowed -= EnableInteraction;
+    AbstractLevelManager.OnInteractionAllowed -= EnableInteraction;
   }
 
   protected void CheckMouseButtonPressed()
@@ -43,7 +44,7 @@ public abstract class AbstractLevelController : MonoBehaviour
       // RaycastHit hit; // Variable to store raycast hit information
       if (Physics.Raycast(ray, out RaycastHit hit)) // Perform the raycast
       {
-        Debug.Log("Mouse Button Pressed and RaycastHit hit: " + hit.transform.name);
+        Debug.Log("Mouse Button Pressed and RaycastHit hit: " + hit.transform.name + ". I am: " + transform.name);
         if (hit.transform == transform)
         {
           isDragging = true;
@@ -55,7 +56,7 @@ public abstract class AbstractLevelController : MonoBehaviour
   protected void CheckMouseButtonReleased()
   {
     // On mouse button up, stop dragging and check win conditions
-    if (Mouse.current.leftButton.wasReleasedThisFrame)
+    if (isDragging && Mouse.current.leftButton.wasReleasedThisFrame)
     {
       Debug.Log("Mouse Button Released");
       isDragging = false;
@@ -95,38 +96,36 @@ public abstract class AbstractLevelController : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Is 'value' angle near 'target' (360 degrees taken into account)
-  /// </summary>
-  protected bool Is(float value, float target, float tolerance = 10f)
-  {
-    return Mathf.Abs(Mathf.DeltaAngle(value, target)) < tolerance;
-  }
-
   protected void CheckWin()
   {
     if (Mouse.current.leftButton.wasReleasedThisFrame)
     {
-      IsWinConditionMet();
+      OnCheckWinCondition?.Invoke(this);
     }
   }
 
-  protected void NotifyWinConditionMet(bool isNowMet)
+  // protected void NotifyWinConditionMet(bool isNowMet)
+  // {
+  //   Debug.Log("NotifyWinConditionMet: " + isNowMet + " (was " + winConditionMet + ")");
+  //   if (isNowMet && !winConditionMet)
+  //   {
+  //     winConditionMet = true;
+  //     OnWinConditionMet?.Invoke(this);
+  //   }
+  //   else if (!isNowMet && winConditionMet)
+  //   {
+  //     winConditionMet = false;
+  //     OnWinConditionLost?.Invoke(this);
+  //   }
+  // }
+
+  protected virtual void EnableInteraction()
   {
-    Debug.Log("NotifyWinConditionMet: " + isNowMet + " (was " + winConditionMet + ")");
-    if (isNowMet && !winConditionMet)
-    {
-      winConditionMet = true;
-      OnWinConditionMet?.Invoke(this);
-    }
-    else if (!isNowMet && winConditionMet)
-    {
-      winConditionMet = false;
-      OnWinConditionLost?.Invoke(this);
-    }
-  }
+    CheckMouseButtonPressed();
 
-  protected abstract void EnableInteraction();
-  protected abstract void IsWinConditionMet();
+    CheckMouseButtonReleased();
+
+    CheckWin();
+  }
 
 }
