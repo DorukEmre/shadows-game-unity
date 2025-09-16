@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class LevelManager3 : AbstractLevelManager
 {
-  private GameObject levelObject1;
-  private GameObject levelObject2;
+  private GameObject obj1;
+  private GameObject obj2;
 
   protected override void Start()
   {
@@ -11,8 +11,8 @@ public class LevelManager3 : AbstractLevelManager
 
     if (levelObjects.Length == 2)
     {
-      levelObject1 = levelObjects[0];
-      levelObject2 = levelObjects[1];
+      obj1 = levelObjects[0];
+      obj2 = levelObjects[1];
     }
     else
       Debug.LogError("Level objects error in LevelManager.");
@@ -20,26 +20,28 @@ public class LevelManager3 : AbstractLevelManager
 
   protected override void IsWinConditionMet()
   {
-    float x = levelObject1.transform.rotation.eulerAngles.x;
-    float y = levelObject1.transform.rotation.eulerAngles.y;
-    float z = levelObject1.transform.rotation.eulerAngles.z;
+    // if rotation for obj1 and obj2 (0.00, 0.00, 0.00)
+    if (IsRotationValid(obj1) && IsRotationValid(obj2))
+    {
+      float y1 = obj1.transform.position.y; // 1.05
+      float y2 = obj2.transform.position.y; // 1.085 to 1.095
 
-    // Win conditions:
-    // 4: position: (0.10, 1.05, 1.25), rotation: (0.00, 0.00, 0.00)
-    // 2: position: (-0.10, 1.09, 0.96), rotation: (0.00, 0.00, 0.00)
-    // (x), (90 || 270), (90 || 270) 
-    // 270, (45 || 225), (135 || 315)
-    // 270, (135 || 315), (45 || 225)
-    // (90 || 270), (0 || 180), (0 || 180)
+      // Debug.Log("Obj: " + obj1.transform.name + ", pos: " + obj1.transform.position + ", rot: " + obj1.transform.rotation.eulerAngles);
+      // Debug.Log("Obj: " + obj2.transform.name + ", pos: " + obj2.transform.position + ", rot: " + obj2.transform.rotation.eulerAngles);
 
-    // if (
-    //     ((Is(y, 90) || Is(y, 270)) && (Is(z, 90) || Is(z, 270)))
-    //     || (Is(x, 270) && (Is(y, 45) || Is(y, 225)) && (Is(z, 135) || Is(z, 315)))
-    //     || (Is(x, 270) && (Is(y, 135) || Is(y, 315)) && (Is(z, 45) || Is(z, 225)))
-    //     || ((Is(x, 90) || Is(x, 270)) && (Is(y, 0) || Is(y, 180)) && (Is(z, 0) || Is(z, 180)))
-    //   )
-    // {
-    // TriggerWin();
-    // }
+      // if absolute between y1 - y2 is between 0.35 and 0.45
+      if (Mathf.Abs(y1 - y2) > 0.035f && Mathf.Abs(y1 - y2) < 0.045f)
+        TriggerWin();
+    }
   }
+
+  private bool IsRotationValid(GameObject levelObject)
+  {
+    float x = levelObject.transform.rotation.eulerAngles.x;
+    float y = levelObject.transform.rotation.eulerAngles.y;
+    float z = levelObject.transform.rotation.eulerAngles.z;
+
+    return Is(x, 0, 8) && Is(y, 0, 8) && Is(z, 0, 9);
+  }
+
 }
