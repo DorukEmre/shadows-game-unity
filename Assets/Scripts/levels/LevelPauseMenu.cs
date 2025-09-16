@@ -69,12 +69,9 @@ public class LevelPauseMenu : MonoBehaviour
   public void ResetRotatableObjects()
   {
     Debug.Log("Resetting RotatableObjects");
-    // call ResetPosition on all GameObject with RotatableObject tag
-    RotatableObject[] rotatableObjects = Object.FindObjectsByType<RotatableObject>(FindObjectsSortMode.None);
-    foreach (RotatableObject obj in rotatableObjects)
-    {
-      obj.ResetPosition();
-    }
+
+    AbstractLevelManager.Instance.ResetRotatableObjects();
+
     gameObject.SetActive(false);
   }
 

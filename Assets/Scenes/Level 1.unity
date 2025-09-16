@@ -148,6 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f09b6b4a3b60223b96f6124e590c6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager1
+  victoryMenu: {fileID: 5821880787688392463}
+  pauseMenu: {fileID: 5270685659187120167}
   levelObjects:
   - {fileID: 738523877}
 --- !u!4 &33154367
@@ -235,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 962fc85797e4e87f59972efeab55f547, type: 3}
       propertyPath: m_TagString
-      value: RotatableObject
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7984758136228937788, guid: 962fc85797e4e87f59972efeab55f547, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -248,9 +250,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 962fc85797e4e87f59972efeab55f547, type: 3}
       insertIndex: -1
       addedObject: {fileID: 738523880}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 962fc85797e4e87f59972efeab55f547, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 738523882}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 962fc85797e4e87f59972efeab55f547, type: 3}
       insertIndex: -1
       addedObject: {fileID: 738523883}
@@ -282,18 +281,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1728247690192620928, guid: 962fc85797e4e87f59972efeab55f547, type: 3}
---- !u!114 &738523882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 738523877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7990768c5a90bd3d990212c85c6ead65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RotatableObject
 --- !u!114 &738523883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67abf83ee4fde889699ea04d3a743cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level1
-  winConditionMet: 0
   minY: 1
   maxY: 1
 --- !u!1 &1354293698
@@ -466,6 +452,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause_Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 279909865689929567, guid: a12758120f41bca4b9fc4380cde8abb3, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 981638314615758057, guid: a12758120f41bca4b9fc4380cde8abb3, type: 3}
       propertyPath: m_Camera
       value: 
@@ -515,6 +505,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a12758120f41bca4b9fc4380cde8abb3, type: 3}
+--- !u!1 &5270685659187120167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 279909865689929567, guid: a12758120f41bca4b9fc4380cde8abb3, type: 3}
+  m_PrefabInstance: {fileID: 5270685659187120166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5821880787688392462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -529,7 +524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4474889014292660284, guid: 4567b40a3604ebfcfbd54f0b08aeb6b2, type: 3}
       propertyPath: m_TagString
-      value: VictoryMenu
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8195399447420858286, guid: 4567b40a3604ebfcfbd54f0b08aeb6b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -585,6 +580,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4567b40a3604ebfcfbd54f0b08aeb6b2, type: 3}
+--- !u!1 &5821880787688392463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4474889014292660284, guid: 4567b40a3604ebfcfbd54f0b08aeb6b2, type: 3}
+  m_PrefabInstance: {fileID: 5821880787688392462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

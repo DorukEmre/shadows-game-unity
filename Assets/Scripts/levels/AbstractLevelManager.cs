@@ -53,6 +53,15 @@ public abstract class AbstractLevelManager : MonoBehaviour
     OnInteractionAllowed?.Invoke();
   }
 
+  public void ResetRotatableObjects()
+  {
+    foreach (var obj in levelObjects)
+    {
+      obj.GetComponent<AbstractObjectController>()?.ResetPosition();
+
+    }
+  }
+
   /// <summary>
   /// Trigger the win condition, show victory menu
   /// </summary>

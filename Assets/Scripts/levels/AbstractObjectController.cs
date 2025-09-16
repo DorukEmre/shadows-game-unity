@@ -10,6 +10,9 @@ public abstract class AbstractObjectController : MonoBehaviour
   [SerializeField] protected float minY = 1f;
   [SerializeField] protected float maxY = 1f;
 
+  private Vector3 originalPosition;
+  private Vector3 originalRotation;
+
   public event System.Action<AbstractObjectController> OnCheckWinCondition;
 
   void Start()
@@ -19,6 +22,9 @@ public abstract class AbstractObjectController : MonoBehaviour
       lm.RegisterObjectController(this);
     else
       Debug.LogError("LevelManager instance not found.");
+
+    originalPosition = transform.position;
+    originalRotation = transform.eulerAngles;
   }
 
   protected void OnEnable()
@@ -87,7 +93,7 @@ public abstract class AbstractObjectController : MonoBehaviour
       else
       {
         float mouseX = Mouse.current.delta.ReadValue().x;
-        transform.Rotate(Vector3.up, mouseX * rotationSpeed, Space.World);
+        transform.Rotate(Vector3.up, -mouseX * rotationSpeed, Space.World);
       }
     }
   }
@@ -109,4 +115,9 @@ public abstract class AbstractObjectController : MonoBehaviour
     CheckWinCondition();
   }
 
+  public void ResetPosition()
+  {
+    transform.position = originalPosition;
+    transform.eulerAngles = originalRotation;
+  }
 }

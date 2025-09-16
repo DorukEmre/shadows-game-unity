@@ -6,9 +6,6 @@ TagManager:
   tags:
   - SelectionSpotLight
   - SpotLight
-  - VictoryMenu
-  - RotatableObject
-  - PauseMenu
   layers:
   - Default
   - TransparentFX
