@@ -89,6 +89,14 @@ public abstract class AbstractLevelController : MonoBehaviour
     }
   }
 
+  /// <summary>
+  /// Is 'value' angle near 'target' (360 degrees taken into account)
+  /// </summary>
+  protected bool Is(float value, float target, float tolerance = 10f)
+  {
+    return Mathf.Abs(Mathf.DeltaAngle(value, target)) < tolerance;
+  }
+
   protected abstract void EnableInteraction();
   protected abstract void IsWinConditionMet();
 
