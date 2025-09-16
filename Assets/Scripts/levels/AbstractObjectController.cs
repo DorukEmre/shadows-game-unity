@@ -7,14 +7,10 @@ public abstract class AbstractObjectController : MonoBehaviour
   protected float rotationSpeed = 1f;
   protected bool isDragging = false;
 
-  public bool winConditionMet = false;
-
   [SerializeField] protected float minY = 1f;
   [SerializeField] protected float maxY = 1f;
 
   public event System.Action<AbstractObjectController> OnCheckWinCondition;
-  // public event System.Action<AbstractObjectController> OnWinConditionMet;
-  // public event System.Action<AbstractObjectController> OnWinConditionLost;
 
   void Start()
   {
@@ -35,7 +31,7 @@ public abstract class AbstractObjectController : MonoBehaviour
     AbstractLevelManager.OnInteractionAllowed -= EnableInteraction;
   }
 
-  protected void CheckMouseButtonPressed()
+  private void CheckMouseButtonPressed()
   {
     // On mouse button down, check if the object is under the cursor
     if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -53,7 +49,7 @@ public abstract class AbstractObjectController : MonoBehaviour
     }
   }
 
-  protected void CheckMouseButtonReleased()
+  private void CheckMouseButtonReleased()
   {
     // On mouse button up, stop dragging and check win conditions
     if (isDragging && Mouse.current.leftButton.wasReleasedThisFrame)
@@ -96,7 +92,7 @@ public abstract class AbstractObjectController : MonoBehaviour
     }
   }
 
-  protected void CheckWin()
+  private void CheckWinCondition()
   {
     if (Mouse.current.leftButton.wasReleasedThisFrame)
     {
@@ -104,28 +100,13 @@ public abstract class AbstractObjectController : MonoBehaviour
     }
   }
 
-  // protected void NotifyWinConditionMet(bool isNowMet)
-  // {
-  //   Debug.Log("NotifyWinConditionMet: " + isNowMet + " (was " + winConditionMet + ")");
-  //   if (isNowMet && !winConditionMet)
-  //   {
-  //     winConditionMet = true;
-  //     OnWinConditionMet?.Invoke(this);
-  //   }
-  //   else if (!isNowMet && winConditionMet)
-  //   {
-  //     winConditionMet = false;
-  //     OnWinConditionLost?.Invoke(this);
-  //   }
-  // }
-
   protected virtual void EnableInteraction()
   {
     CheckMouseButtonPressed();
 
     CheckMouseButtonReleased();
 
-    CheckWin();
+    CheckWinCondition();
   }
 
 }

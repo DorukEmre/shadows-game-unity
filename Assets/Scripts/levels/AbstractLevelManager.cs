@@ -11,15 +11,12 @@ public abstract class AbstractLevelManager : MonoBehaviour
   public static AbstractLevelManager Instance;
 
   private bool hasWon = false;
-  private GameObject victoryMenu;
-  private GameObject pauseMenu;
-  // private int nObjects = 0;
+  [SerializeField] private GameObject victoryMenu;
+  [SerializeField] private GameObject pauseMenu;
 
   [SerializeField] public GameObject[] levelObjects;
 
   public static event System.Action OnInteractionAllowed;
-
-  // private System.Collections.Generic.List<AbstractObjectController> registeredControllers = new System.Collections.Generic.List<AbstractObjectController>();
 
   void Awake()
   {
@@ -31,16 +28,15 @@ public abstract class AbstractLevelManager : MonoBehaviour
 
   protected virtual void Start()
   {
-    victoryMenu = GameObject.FindGameObjectWithTag("VictoryMenu");
-    if (victoryMenu != null)
-      victoryMenu.SetActive(false);
-
-    pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
-    if (pauseMenu != null)
-      pauseMenu.SetActive(false);
-
     if (victoryMenu == null || pauseMenu == null)
-      Debug.LogError("Error loading menus.");
+      Debug.LogError("Error loading menus in LevelManager.");
+
+    victoryMenu.SetActive(false);
+
+    pauseMenu.SetActive(false);
+
+    if (levelObjects.Length == 0)
+      Debug.LogError("No level objects assigned in LevelManager.");
   }
 
   void Update()
@@ -57,16 +53,19 @@ public abstract class AbstractLevelManager : MonoBehaviour
     OnInteractionAllowed?.Invoke();
   }
 
-  public void TriggerWin()
+  /// <summary>
+  /// Trigger the win condition, show victory menu
+  /// </summary>
+  protected void TriggerWin()
   {
     hasWon = true;
 
     victoryMenu.GetComponent<LevelVictoryMenu>().ProcessVictory();
   }
 
+  /// Check for pause menu input (Escape key)
   void CheckPauseMenuInput()
   {
-    // Toggle pause menu visibility on esc key press
     if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
     {
       pauseMenu.SetActive(!pauseMenu.activeSelf);
@@ -79,25 +78,7 @@ public abstract class AbstractLevelManager : MonoBehaviour
 
   public void RegisterObjectController(AbstractObjectController controller)
   {
-    // if (!registeredControllers.Contains(controller))
-    // {
-    //   Debug.Log("Registering level controller: " + controller.name);
-    //   registeredControllers.Add(controller);
-    //   // nObjects++;
-    // }
-
-    // controller.OnWinConditionMet += OnLevelWinConditionMet;
-    // controller.OnWinConditionLost += OnLevelWinConditionLost;
     controller.OnCheckWinCondition += OnCheckWinCondition;
-  }
-
-
-  /// <summary>
-  /// Is 'value' angle near 'target' (360 degrees taken into account)
-  /// </summary>
-  protected bool Is(float value, float target, float tolerance = 10f)
-  {
-    return Mathf.Abs(Mathf.DeltaAngle(value, target)) < tolerance;
   }
 
   private void OnCheckWinCondition(AbstractObjectController controller)
@@ -107,38 +88,11 @@ public abstract class AbstractLevelManager : MonoBehaviour
 
   protected abstract void IsWinConditionMet();
 
-  // private void OnLevelWinConditionMet(AbstractObjectController controller)
-  // {
-  //   Debug.Log($"Win condition met for: {controller.name}");
-
-  //   if (nObjects != registeredControllers.Count)
-  //     Debug.LogWarning("nObjects does not match registeredControllers count!");
-
-  //   Debug.Log("registeredControllers count: " + registeredControllers.Count);
-
-  //   int objWithWinConditionMet = 0;
-  //   foreach (var ctrl in registeredControllers)
-  //   {
-  //     Debug.Log($"Registered controller: {ctrl.name}, WinConditionMet: {ctrl.winConditionMet}");
-  //     if (!ctrl.winConditionMet)
-  //       return;
-  //     else
-  //       objWithWinConditionMet++;
-  //   }
-
-  //   if (objWithWinConditionMet == nObjects)
-  //     TriggerWin();
-  // }
-
-  // private void OnLevelWinConditionLost(AbstractObjectController controller)
-  // {
-  //   // Handle win condition lost for a controller
-  //   Debug.Log($"Win condition lost for: {controller.name}");
-  //   // Add logic if needed
-  //   Debug.Log("registeredControllers count: " + registeredControllers.Count);
-  //   foreach (var ctrl in registeredControllers)
-  //   {
-  //     Debug.Log($"Registered controller: {ctrl.name}, WinConditionMet: {ctrl.winConditionMet}");
-  //   }
-  // }
+  /// <summary>
+  /// Is 'value' angle near 'target' (360 degrees taken into account)
+  /// </summary>
+  protected bool Is(float value, float target, float tolerance = 10f)
+  {
+    return Mathf.Abs(Mathf.DeltaAngle(value, target)) < tolerance;
+  }
 }

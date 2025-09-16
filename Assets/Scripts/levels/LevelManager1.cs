@@ -8,10 +8,10 @@ public class LevelManager1 : AbstractLevelManager
   {
     base.Start();
 
-    if (levelObjects.Length > 0)
+    if (levelObjects.Length == 1)
       levelObject = levelObjects[0];
     else
-      Debug.LogError("No level objects assigned in LevelManager.");
+      Debug.LogError("Level objects error in LevelManager.");
   }
 
   protected override void IsWinConditionMet()
