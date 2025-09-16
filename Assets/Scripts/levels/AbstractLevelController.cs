@@ -7,10 +7,20 @@ public abstract class AbstractLevelController : MonoBehaviour
   protected float rotationSpeed = 1f;
   protected bool isDragging = false;
 
+  public bool winConditionMet = false;
+
+  [SerializeField] protected float minY = 1f;
+  [SerializeField] protected float maxY = 1f;
+
+  public event System.Action<AbstractLevelController> OnWinConditionMet;
+  public event System.Action<AbstractLevelController> OnWinConditionLost;
+
   protected virtual void Start()
   {
     lm = LevelManager.Instance;
-    if (lm == null)
+    if (lm != null)
+      lm.RegisterLevelController(this);
+    else
       Debug.LogError("LevelManager instance not found.");
   }
 
@@ -50,37 +60,33 @@ public abstract class AbstractLevelController : MonoBehaviour
       Debug.Log("Mouse Button Released");
       isDragging = false;
 
-      Debug.Log(transform.rotation.eulerAngles);
+      Debug.Log("Obj: " + transform.name + ", pos: " + transform.position + ", rot: " + transform.rotation.eulerAngles);
 
     }
   }
 
-  protected void CheckWin()
-  {
-    if (Mouse.current.leftButton.wasReleasedThisFrame)
-    {
-      IsWinConditionMet();
-    }
-  }
-
-  protected void RotateYIfDragging()
+  /// <summary>
+  /// Rotate on X and Y axis and move along Y axis if allowed
+  /// By default, only rotate around Y axis. Boolean parameters enable other movements.
+  /// </summary>
+  protected void ManipulateIfDragging(bool canRotateX = false, bool canMoveY = false)
   {
     if (isDragging && Mouse.current.leftButton.isPressed)
     {
-      float mouseX = Mouse.current.delta.ReadValue().x;
-      transform.Rotate(Vector3.up, mouseX * rotationSpeed, Space.World);
-    }
-  }
-
-  protected void RotateXAndYIfDragging()
-  {
-    if (isDragging && Mouse.current.leftButton.isPressed)
-    {
-      if (Keyboard.current != null && Keyboard.current.leftCtrlKey.isPressed)
+      // Rotate around X axis when Left Ctrl is held
+      if (canRotateX && Keyboard.current != null && Keyboard.current.leftCtrlKey.isPressed)
       {
         float mouseY = Mouse.current.delta.ReadValue().y;
         transform.Rotate(Vector3.right, -mouseY * rotationSpeed, Space.World);
       }
+      // Move up and down when Left Shift is held
+      else if (canMoveY && Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed)
+      {
+        float mouseY = Mouse.current.delta.ReadValue().y;
+        float newY = Mathf.Clamp(transform.position.y + mouseY * rotationSpeed * 0.001f, minY, maxY);
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+      }
+      // Rotate around Y axis
       else
       {
         float mouseX = Mouse.current.delta.ReadValue().x;
@@ -95,6 +101,29 @@ public abstract class AbstractLevelController : MonoBehaviour
   protected bool Is(float value, float target, float tolerance = 10f)
   {
     return Mathf.Abs(Mathf.DeltaAngle(value, target)) < tolerance;
+  }
+
+  protected void CheckWin()
+  {
+    if (Mouse.current.leftButton.wasReleasedThisFrame)
+    {
+      IsWinConditionMet();
+    }
+  }
+
+  protected void NotifyWinConditionMet(bool isNowMet)
+  {
+    Debug.Log("NotifyWinConditionMet: " + isNowMet + " (was " + winConditionMet + ")");
+    if (isNowMet && !winConditionMet)
+    {
+      winConditionMet = true;
+      OnWinConditionMet?.Invoke(this);
+    }
+    else if (!isNowMet && winConditionMet)
+    {
+      winConditionMet = false;
+      OnWinConditionLost?.Invoke(this);
+    }
   }
 
   protected abstract void EnableInteraction();

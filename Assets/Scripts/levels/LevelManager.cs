@@ -13,7 +13,11 @@ public class LevelManager : MonoBehaviour
   private bool hasWon = false;
   private GameObject victoryMenu;
   private GameObject pauseMenu;
+  private int nObjects = 0;
 
+  public static event System.Action OnInteractionAllowed;
+
+  private System.Collections.Generic.List<AbstractLevelController> registeredControllers = new System.Collections.Generic.List<AbstractLevelController>();
 
   void Awake()
   {
@@ -51,8 +55,6 @@ public class LevelManager : MonoBehaviour
     OnInteractionAllowed?.Invoke();
   }
 
-  public static event System.Action OnInteractionAllowed;
-
   public void TriggerWin()
   {
     hasWon = true;
@@ -70,6 +72,52 @@ public class LevelManager : MonoBehaviour
       {
         pauseMenu.GetComponent<LevelPauseMenu>().SlideInBars();
       }
+    }
+  }
+
+  public void RegisterLevelController(AbstractLevelController controller)
+  {
+    if (!registeredControllers.Contains(controller))
+    {
+      Debug.Log("Registering level controller: " + controller.name);
+      registeredControllers.Add(controller);
+      nObjects++;
+    }
+
+    controller.OnWinConditionMet += OnLevelWinConditionMet;
+    controller.OnWinConditionLost += OnLevelWinConditionLost;
+  }
+
+  private void OnLevelWinConditionMet(AbstractLevelController controller)
+  {
+    Debug.Log($"Win condition met for: {controller.name}");
+
+    if (nObjects != registeredControllers.Count)
+      Debug.LogWarning("nObjects does not match registeredControllers count!");
+
+    int objWithWinConditionMet = 0;
+    foreach (var ctrl in registeredControllers)
+    {
+      Debug.Log($"Registered controller: {ctrl.name}, WinConditionMet: {ctrl.winConditionMet}");
+      if (!ctrl.winConditionMet)
+        return;
+      else
+        objWithWinConditionMet++;
+    }
+
+    if (objWithWinConditionMet == nObjects)
+      TriggerWin();
+  }
+
+  private void OnLevelWinConditionLost(AbstractLevelController controller)
+  {
+    // Handle win condition lost for a controller
+    Debug.Log($"Win condition lost for: {controller.name}");
+    // Add logic if needed
+    Debug.Log("registeredControllers count: " + registeredControllers.Count);
+    foreach (var ctrl in registeredControllers)
+    {
+      Debug.Log($"Registered controller: {ctrl.name}, WinConditionMet: {ctrl.winConditionMet}");
     }
   }
 }

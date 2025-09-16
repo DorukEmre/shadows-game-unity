@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Level2 : AbstractLevelController
 {
@@ -12,11 +11,13 @@ public class Level2 : AbstractLevelController
 
     CheckWin();
 
-    RotateXAndYIfDragging();
+    // Can rotate on X and Y axis
+    ManipulateIfDragging(true);
   }
 
   protected override void IsWinConditionMet()
   {
+    bool isNowMet = false;
     float x = transform.rotation.eulerAngles.x;
     float y = transform.rotation.eulerAngles.y;
     float z = transform.rotation.eulerAngles.z;
@@ -34,8 +35,10 @@ public class Level2 : AbstractLevelController
         || ((Is(x, 90) || Is(x, 270)) && (Is(y, 0) || Is(y, 180)) && (Is(z, 0) || Is(z, 180)))
       )
     {
-      lm.TriggerWin();
+      isNowMet = true;
     }
+
+    NotifyWinConditionMet(isNowMet);
   }
 
 }

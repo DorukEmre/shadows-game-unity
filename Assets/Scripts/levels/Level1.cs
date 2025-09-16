@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Level1 : AbstractLevelController
 {
@@ -12,18 +11,23 @@ public class Level1 : AbstractLevelController
 
     CheckWin();
 
-    RotateYIfDragging();
+    // Can only rotate around Y axis
+    ManipulateIfDragging();
   }
 
 
   protected override void IsWinConditionMet()
   {
+    bool isNowMet = false;
     float yRotation = transform.rotation.eulerAngles.y;
+
     if ((yRotation > 0 && yRotation < 10)
     || (yRotation > 350 && yRotation < 360)
     || (yRotation > 170 && yRotation < 190))
     {
-      lm.TriggerWin();
+      isNowMet = true;
     }
+
+    NotifyWinConditionMet(isNowMet);
   }
 }
