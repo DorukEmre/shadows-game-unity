@@ -75,6 +75,12 @@ public class LevelPauseMenu : MonoBehaviour
     gameObject.SetActive(false);
   }
 
+  public void ReturnMainMenu()
+  {
+    Debug.Log("Returning to Main Menu");
+    SceneManager.LoadScene("MainMenu");
+  }
+
   public void QuitGame()
   {
     Debug.Log("Quitting Game");

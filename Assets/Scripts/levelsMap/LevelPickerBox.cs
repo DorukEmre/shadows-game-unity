@@ -31,6 +31,8 @@ public class LevelPickerBox
   public string hint;
   [SerializeField] private TextMeshPro hintTextComponent;
 
+  private bool isPaused = false;
+
   void Start()
   {
     // Get Renderer component of the "Body" to apply materials
@@ -80,6 +82,15 @@ public class LevelPickerBox
     }
 
     AssignState();
+  }
+
+  void Update()
+  {
+    if (LevelsMapManager.Instance != null)
+      isPaused = LevelsMapManager.Instance.IsPaused();
+
+    if (isPaused)
+      hintTextComponent.enabled = false;
   }
 
   void OnValidate()
@@ -171,6 +182,9 @@ public class LevelPickerBox
 
   public void OnPointerEnter(PointerEventData eventData)
   {
+    if (isPaused)
+      return;
+
     if (hintTextComponent != null)
       hintTextComponent.enabled = true;
   }
@@ -183,6 +197,8 @@ public class LevelPickerBox
 
   public void LoadLevel()
   {
+    if (isPaused)
+      return;
 
     if (gm.levelStates[levelNumber - 1] != LevelState.Locked)
     {
