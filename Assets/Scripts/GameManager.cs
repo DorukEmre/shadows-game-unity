@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
   [HideInInspector]
   public LevelState[] levelStates;
 
+  [HideInInspector]
+  public bool firstTimePlaying = true;
+
   void Awake()
   {
     if (Instance == null)

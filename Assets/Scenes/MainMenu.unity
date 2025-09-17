@@ -293,6 +293,7 @@ MonoBehaviour:
   newlyCompletedIndex: -1
   newlyUnlockedIndex: -1
   levelStates: 
+  firstTimePlaying: 1
 --- !u!4 &197546142
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,7 +1114,7 @@ GameObject:
   - component: {fileID: 1729886354}
   - component: {fileID: 1729886358}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: ManiMenu_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
