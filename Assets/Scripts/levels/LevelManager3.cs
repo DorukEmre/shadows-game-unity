@@ -30,9 +30,13 @@ public class LevelManager3 : AbstractLevelManager
       // Debug.Log("Obj: " + obj2.transform.name + ", pos: " + obj2.transform.position + ", rot: " + obj2.transform.rotation.eulerAngles);
 
       // if absolute between y1 - y2 is between 0.35 and 0.45
-      if (Mathf.Abs(y1 - y2) > 0.035f && Mathf.Abs(y1 - y2) < 0.045f)
+      if (Mathf.Abs(y1 - y2) > 0.01f && Mathf.Abs(y1 - y2) < 0.065f)
         TriggerWin();
+      else
+        Debug.Log("Y difference not valid: " + Mathf.Abs(y1 - y2) + ", y1: " + y1 + ", y2: " + y2);
     }
+    else
+      Debug.Log("Rotation not valid. Obj1: " + obj1.transform.rotation.eulerAngles + ": " + IsRotationValid(obj1) + ", Obj2: " + obj2.transform.rotation.eulerAngles + ": " + IsRotationValid(obj2));
   }
 
   private bool IsRotationValid(GameObject levelObject)
