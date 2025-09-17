@@ -21,7 +21,7 @@ public class LevelManager3 : AbstractLevelManager
   protected override void IsWinConditionMet()
   {
     // if rotation for obj1 and obj2 (0.00, 0.00, 0.00)
-    if (IsRotationValid(obj1) && IsRotationValid(obj2))
+    if (IsRotationValidObj1(obj1) && IsRotationValidObj2(obj2))
     {
       float y1 = obj1.transform.position.y; // 1.05
       float y2 = obj2.transform.position.y; // 1.085 to 1.095
@@ -36,16 +36,27 @@ public class LevelManager3 : AbstractLevelManager
         Debug.Log("Y difference not valid: " + Mathf.Abs(y1 - y2) + ", y1: " + y1 + ", y2: " + y2);
     }
     else
-      Debug.Log("Rotation not valid. Obj1: " + obj1.transform.rotation.eulerAngles + ": " + IsRotationValid(obj1) + ", Obj2: " + obj2.transform.rotation.eulerAngles + ": " + IsRotationValid(obj2));
+      Debug.Log("Rotation not valid. Obj1: " + obj1.transform.rotation.eulerAngles + ": " + IsRotationValidObj1(obj1) + ", Obj2: " + obj2.transform.rotation.eulerAngles + ": " + IsRotationValidObj2(obj2));
   }
 
-  private bool IsRotationValid(GameObject levelObject)
+  private bool IsRotationValidObj1(GameObject levelObject)
   {
     float x = levelObject.transform.rotation.eulerAngles.x;
     float y = levelObject.transform.rotation.eulerAngles.y;
     float z = levelObject.transform.rotation.eulerAngles.z;
 
     return Is(x, 0, 8) && Is(y, 0, 8) && Is(z, 0, 9);
+  }
+
+  private bool IsRotationValidObj2(GameObject levelObject)
+  {
+    float x = levelObject.transform.rotation.eulerAngles.x;
+    float y = levelObject.transform.rotation.eulerAngles.y;
+    float z = levelObject.transform.rotation.eulerAngles.z;
+
+    return Is(x, 0, 8)
+      && Is(y, 0, 8)
+      && (Is(z, 0, 9) || Is(z, 180, 9));
   }
 
 }
