@@ -1,10 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-
 
 public class MainMenu : MonoBehaviour, IPointerEnterHandler
 {
-  public GameObject selectionSpotLight;
+  [SerializeField] private GameObject selectionSpotLight;
 
   public void OnPointerEnter(PointerEventData eventData)
   {
@@ -22,19 +22,25 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
 
     Debug.Log("Game mode selected: " + mode);
 
+    LevelState[] levelStates = GameManager.Instance.levelStates;
+
     if (mode == "test")
     {
-      GameManager.Instance.levelStates = new LevelState[10] { LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked, LevelState.Unlocked };
+      for (int i = 0; i < levelStates.Length; i++)
+      {
+        levelStates[i] = LevelState.Unlocked;
+      }
     }
     else if (mode == "normal")
     {
-      GameManager.Instance.levelStates = new LevelState[10] { LevelState.Unlocked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked, LevelState.Locked };
+      levelStates[0] = LevelState.Unlocked;
+      for (int i = 1; i < levelStates.Length; i++)
+      {
+        levelStates[i] = LevelState.Locked;
+      }
     }
-    else // continue
-    {
-      GameManager.Instance.levelStates = new LevelState[10] { LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Locked };
-    }
-    UnityEngine.SceneManagement.SceneManager.LoadScene("LevelsMap");
+
+    SceneManager.LoadScene("LevelsMap");
   }
 
   public void QuitGame()

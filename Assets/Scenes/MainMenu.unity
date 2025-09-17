@@ -289,10 +289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343b263ca4dbab9dda430ff04ce5d688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  levelStates: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   currentLevelIndex: -1
   newlyCompletedIndex: -1
   newlyUnlockedIndex: -1
+  levelStates: 
 --- !u!4 &197546142
 Transform:
   m_ObjectHideFlags: 0
