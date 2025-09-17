@@ -314,6 +314,17 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 1627236534926139147, guid: 469dede73105f5f799b1549f2e170532, type: 3}
   m_PrefabInstance: {fileID: 1213670622}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &382622736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2520969390944968148, guid: 6517415b520978776bfed47ac02815b9, type: 3}
+  m_PrefabInstance: {fileID: 484013790}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &428803225 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5800146967271779082, guid: 6517415b520978776bfed47ac02815b9, type: 3}
@@ -517,6 +528,10 @@ PrefabInstance:
     - target: {fileID: 6046355202296167890, guid: 6517415b520978776bfed47ac02815b9, type: 3}
       propertyPath: m_Name
       value: ContinueMode_Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174714630266756109, guid: 6517415b520978776bfed47ac02815b9, type: 3}
+      propertyPath: m_Name
+      value: ContinueButton_Text
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1217,6 +1232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
   selectionSpotLight: {fileID: 1649235715}
+  continueButtonText: {fileID: 382622736}
 --- !u!1001 &2143514514
 PrefabInstance:
   m_ObjectHideFlags: 0
