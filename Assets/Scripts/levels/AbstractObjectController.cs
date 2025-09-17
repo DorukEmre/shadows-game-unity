@@ -80,7 +80,16 @@ public abstract class AbstractObjectController : MonoBehaviour
       if (canRotateX && Keyboard.current != null && Keyboard.current.leftCtrlKey.isPressed)
       {
         float mouseY = Mouse.current.delta.ReadValue().y;
-        transform.Rotate(Vector3.right, -mouseY * rotationSpeed, Space.World);
+        transform.Rotate(Vector3.left, mouseY * rotationSpeed, Space.World);
+
+        // Alternative with correction for parallax
+        // // Calculate the view direction from camera to object
+        // Vector3 viewDir = (transform.position - Camera.main.transform.position).normalized;
+        // // Project camera's right vector onto the plane perpendicular to viewDir
+        // Vector3 cameraRight = Camera.main.transform.right;
+        // Vector3 tangentAxis = Vector3.ProjectOnPlane(cameraRight, viewDir).normalized;
+        // // Rotate around this tangent axis in world space
+        // transform.Rotate(tangentAxis, mouseY * rotationSpeed, Space.World);
       }
       // Move up and down when Left Shift is held
       else if (canMoveY && Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed)
@@ -93,7 +102,7 @@ public abstract class AbstractObjectController : MonoBehaviour
       else
       {
         float mouseX = Mouse.current.delta.ReadValue().x;
-        transform.Rotate(Vector3.up, -mouseX * rotationSpeed, Space.World);
+        transform.Rotate(Vector3.down, mouseX * rotationSpeed, Space.World);
       }
     }
   }
