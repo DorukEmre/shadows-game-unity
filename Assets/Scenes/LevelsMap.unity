@@ -258,7 +258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
-      value: Level Box (3)
+      value: LevelBox_4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -576,7 +576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
-      value: Level Box (1)
+      value: LevelBox_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -653,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
-      value: Level Box (2)
+      value: LevelBox_3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -742,7 +742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6795753266111887356, guid: 76a681566e2a1a97bb1ed0fc0aea338e, type: 3}
       propertyPath: m_Name
-      value: Level Box
+      value: LevelBox_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -787,6 +787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelPicker
   pauseMenu: {fileID: 1639683426}
+  levelBoxesContainer: {fileID: 308781337}
 --- !u!4 &1142094890
 Transform:
   m_ObjectHideFlags: 0

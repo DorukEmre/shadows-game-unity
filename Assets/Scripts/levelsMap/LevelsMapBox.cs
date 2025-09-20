@@ -13,7 +13,7 @@ using TMPro;
 /// Hint text (assigned by user in the interface) is shown/hidden on hover.
 /// </summary>
 [ExecuteAlways]
-public class LevelPickerBox
+public class LevelsMapBox
   : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
   private GameManager gm = GameManager.Instance;
@@ -24,9 +24,9 @@ public class LevelPickerBox
   private Renderer levelBoxRenderer;
   [SerializeField] private Material completedMaterial;
   [SerializeField] private Material lockedMaterial;
-  [SerializeField] private Material unlockedMaterial;
 
-  private Light boxLight;
+  [SerializeField] private Light bottomLight;
+  [SerializeField] private Light topLight;
 
   public string hint;
   [SerializeField] private TextMeshPro hintTextComponent;
@@ -35,6 +35,12 @@ public class LevelPickerBox
 
   void Start()
   {
+    if (gm == null || levelNumberTextComponent == null || completedMaterial == null || lockedMaterial == null || hintTextComponent == null || bottomLight == null || topLight == null)
+    {
+      Debug.LogError("Error loading LevelsMapBox");
+      return;
+    }
+
     // Get Renderer component of the "Body" to apply materials
     Transform bodyChild = transform.Find("Body");
     if (bodyChild != null)
@@ -48,38 +54,10 @@ public class LevelPickerBox
       return;
     }
 
-    // Get Light component
-    Transform lightChild = transform.Find("Light");
-    if (lightChild != null)
-    {
-      boxLight = lightChild.GetComponent<Light>();
-    }
+    levelNumberTextComponent.text = levelNumber.ToString();
 
-    if (boxLight == null)
-    {
-      Debug.LogError("Light component not found on the Point Light child of Level Box");
-      return;
-    }
-
-    // Set the TextMeshProUGUI text to the level number
-    if (levelNumberTextComponent != null)
-    {
-      levelNumberTextComponent.text = levelNumber.ToString();
-    }
-    else
-    {
-      Debug.LogError("levelNumberTextComponent reference not assigned in the Inspector");
-    }
-
-    if (hintTextComponent != null)
-    {
-      hintTextComponent.text = hint;
-      hintTextComponent.enabled = false;
-    }
-    else
-    {
-      Debug.LogError("hintTextComponent reference not assigned in the Inspector");
-    }
+    hintTextComponent.text = hint;
+    hintTextComponent.enabled = false;
 
     AssignState();
   }
@@ -117,31 +95,20 @@ public class LevelPickerBox
       if (gm.levelStates[levelIndex] == LevelState.Completed)
       {
         if (levelIndex == gm.newlyCompletedIndex && gm.newlyCompletedIndex >= 0)
-        {
-          levelBoxRenderer.material = unlockedMaterial;
-          boxLight.enabled = false;
-          gm.newlyCompletedIndex = -1;
-          StartCoroutine(NewlyCompletedEffect());
-        }
-        levelBoxRenderer.material = completedMaterial;
-        boxLight.enabled = true;
+          setUnlockedLevel(); // Temporarily set to unlocked for animation
+        else
+          setCompletedLevel();
       }
       else if (gm.levelStates[levelIndex] == LevelState.Unlocked)
       {
         if (levelIndex == gm.newlyUnlockedIndex && gm.newlyUnlockedIndex >= 0)
-        {
-          levelBoxRenderer.material = lockedMaterial;
-          boxLight.enabled = false;
-          gm.newlyUnlockedIndex = -1;
-          StartCoroutine(NewlyUnlockedEffect());
-        }
-        levelBoxRenderer.material = unlockedMaterial;
-        boxLight.enabled = false;
+          setLockedLevel(); // Temporarily set to locked for animation
+        else
+          setUnlockedLevel();
       }
       else
       {
-        levelBoxRenderer.material = lockedMaterial;
-        boxLight.enabled = false;
+        setLockedLevel();
       }
     }
     else
@@ -150,8 +117,58 @@ public class LevelPickerBox
     }
   }
 
+  private void setCompletedLevel()
+  {
+    levelBoxRenderer.material = completedMaterial;
+    bottomLight.enabled = true;
+    topLight.enabled = true;
+    topLight.innerSpotAngle = 22f;
+    topLight.spotAngle = 30f;
+    topLight.intensity = 5f;
+
+    Vector3 newPosition = topLight.transform.position;
+    newPosition.y = 5f;
+    topLight.transform.position = newPosition;
+  }
+
+  private void setUnlockedLevel()
+  {
+    levelBoxRenderer.material = lockedMaterial;
+    bottomLight.enabled = false;
+    topLight.enabled = true;
+    topLight.innerSpotAngle = 5f;
+    topLight.spotAngle = 23f;
+    topLight.intensity = 17f;
+
+    Vector3 newPosition = topLight.transform.position;
+    newPosition.y = 3f;
+    topLight.transform.position = newPosition;
+  }
+
+  private void setLockedLevel()
+  {
+    levelBoxRenderer.material = lockedMaterial;
+    bottomLight.enabled = false;
+    topLight.enabled = false;
+  }
+
+  public System.Collections.IEnumerator AnimateNewlyCompletedLevel()
+  {
+    gm.newlyCompletedIndex = -1;
+    yield return StartCoroutine(NewlyCompletedEffect());
+    setCompletedLevel();
+  }
+
+  public System.Collections.IEnumerator AnimateNewlyUnlockedLevel()
+  {
+    gm.newlyUnlockedIndex = -1;
+    yield return StartCoroutine(NewlyUnlockedEffect());
+    setUnlockedLevel();
+  }
+
   private System.Collections.IEnumerator NewlyCompletedEffect(float duration = 1f)
   {
+    Debug.Log("NewlyCompletedEffect > Level " + levelNumber + ". debug 1");
     Vector3 originalScale = transform.localScale;
     Vector3 targetScale = originalScale * 1.2f;
     float elapsed = 0f;
@@ -163,6 +180,8 @@ public class LevelPickerBox
       yield return null;
     }
     transform.localScale = originalScale;
+    Debug.Log("NewlyCompletedEffect > Level " + levelNumber + ". debug 2");
+
   }
 
   private System.Collections.IEnumerator NewlyUnlockedEffect(float duration = 1f)
