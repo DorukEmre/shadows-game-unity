@@ -32,6 +32,13 @@ public class LevelsMapBox
   [SerializeField] private TextMeshPro hintTextComponent;
 
   private bool isPaused = false;
+  private bool isUnlocked = false;
+
+  // for top light drifting
+  private Vector3 originalTopLightPosition;
+  private Vector2 driftDirection = Vector2.zero;
+  private float driftTimer = 0f;
+  private const float driftChangeInterval = 0.9f;
 
   void Start()
   {
@@ -50,7 +57,7 @@ public class LevelsMapBox
 
     if (levelBoxRenderer == null)
     {
-      Debug.LogError("Renderer component not found on the Cube child of Level Box");
+      Debug.LogError("Renderer component not found on the Cube of Level Box");
       return;
     }
 
@@ -58,6 +65,8 @@ public class LevelsMapBox
 
     hintTextComponent.text = hint;
     hintTextComponent.enabled = false;
+
+    originalTopLightPosition = topLight.transform.position;
 
     AssignState();
   }
@@ -68,7 +77,13 @@ public class LevelsMapBox
       isPaused = LevelsMapManager.Instance.IsPaused();
 
     if (isPaused)
+    {
       hintTextComponent.enabled = false;
+      return;
+    }
+
+    if (isUnlocked)
+      driftTopLight();
   }
 
   void OnValidate()
@@ -95,7 +110,10 @@ public class LevelsMapBox
       if (gm.levelStates[levelIndex] == LevelState.Completed)
       {
         if (levelIndex == gm.newlyCompletedIndex && gm.newlyCompletedIndex >= 0)
+        {
           setUnlockedLevel(); // Temporarily set to unlocked for animation
+          isUnlocked = false;
+        }
         else
           setCompletedLevel();
       }
@@ -143,6 +161,8 @@ public class LevelsMapBox
     Vector3 newPosition = topLight.transform.position;
     newPosition.y = 3f;
     topLight.transform.position = newPosition;
+
+    isUnlocked = true;
   }
 
   private void setLockedLevel()
@@ -168,7 +188,6 @@ public class LevelsMapBox
 
   private System.Collections.IEnumerator NewlyCompletedEffect(float duration = 1f)
   {
-    Debug.Log("NewlyCompletedEffect > Level " + levelNumber + ". debug 1");
     Vector3 originalScale = transform.localScale;
     Vector3 targetScale = originalScale * 1.2f;
     float elapsed = 0f;
@@ -180,7 +199,6 @@ public class LevelsMapBox
       yield return null;
     }
     transform.localScale = originalScale;
-    Debug.Log("NewlyCompletedEffect > Level " + levelNumber + ". debug 2");
 
   }
 
@@ -197,6 +215,29 @@ public class LevelsMapBox
       yield return null;
     }
     transform.localScale = originalScale;
+  }
+
+  private void driftTopLight(float driftAmount = 0.01f, float maxDrift = 0.25f)
+  {
+    driftTimer += Time.deltaTime;
+    float randomDriftChangeInterval = Random.Range(driftChangeInterval - 0.15f, driftChangeInterval + 0.15f);
+    if (driftTimer >= driftChangeInterval || driftDirection == Vector2.zero)
+    {
+      driftDirection = new Vector2(
+        Random.Range(-1f, 1f),
+        Random.Range(-1f, 1f)
+      ).normalized;
+      driftTimer = 0f;
+    }
+
+    Vector3 newPosition = topLight.transform.position;
+    newPosition.x += driftDirection.x * driftAmount;
+    newPosition.z += driftDirection.y * driftAmount;
+
+    newPosition.x = Mathf.Clamp(newPosition.x, originalTopLightPosition.x - maxDrift, originalTopLightPosition.x + maxDrift);
+    newPosition.z = Mathf.Clamp(newPosition.z, originalTopLightPosition.z - maxDrift, originalTopLightPosition.z + maxDrift);
+
+    topLight.transform.position = newPosition;
   }
 
   public void OnPointerEnter(PointerEventData eventData)

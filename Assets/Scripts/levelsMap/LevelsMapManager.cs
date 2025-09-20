@@ -80,7 +80,6 @@ public class LevelsMapManager : MonoBehaviour
 
   System.Collections.IEnumerator AnimateNewlyCompletedLevelBox()
   {
-    Debug.Log("AnimateNewlyCompletedLevelBox 1");
     if (GameManager.Instance != null
       && GameManager.Instance.newlyCompletedIndex != -1)
     {
