@@ -38,13 +38,21 @@ public class LevelsMapBox
   private Vector3 originalTopLightPosition;
   private Vector2 driftDirection = Vector2.zero;
   private float driftTimer = 0f;
-  private const float driftChangeInterval = 0.9f;
+  private const float driftChangeInterval = 0.7f;
 
   void Start()
   {
     if (gm == null || levelNumberTextComponent == null || completedMaterial == null || lockedMaterial == null || hintTextComponent == null || bottomLight == null || topLight == null)
     {
-      Debug.LogError("Error loading LevelsMapBox");
+      Debug.LogError("Error loading LevelsMapBox" +
+        (gm == null ? " GameManager" : "") +
+        (levelNumberTextComponent == null ? " levelNumberTextComponent" : "") +
+        (completedMaterial == null ? " completedMaterial" : "") +
+        (lockedMaterial == null ? " lockedMaterial" : "") +
+        (hintTextComponent == null ? " hintTextComponent" : "") +
+        (bottomLight == null ? " bottomLight" : "") +
+        (topLight == null ? " topLight" : "")
+      );
       return;
     }
 

@@ -6,6 +6,9 @@ public class LevelsMapManager : MonoBehaviour
   public static LevelsMapManager Instance;
   [SerializeField] private GameObject pauseMenu;
   [SerializeField] private GameObject levelBoxesContainer;
+  [SerializeField] private AudioClip completedAudioClip;
+  [SerializeField] private AudioClip unlockedAudioClip;
+  private AudioSource audioSource;
 
   private bool isPaused = false;
 
@@ -15,6 +18,10 @@ public class LevelsMapManager : MonoBehaviour
       Instance = this;
     else
       Destroy(gameObject);
+
+    audioSource = GetComponent<AudioSource>();
+    if (audioSource == null || completedAudioClip == null || unlockedAudioClip == null)
+      Debug.LogError("Audio missing from LevelsMapManager");
   }
 
   void Start()
@@ -96,7 +103,10 @@ public class LevelsMapManager : MonoBehaviour
       }
 
       if (completedBox != null)
+      {
+        audioSource.PlayOneShot(completedAudioClip);
         yield return StartCoroutine(completedBox.AnimateNewlyCompletedLevel());
+      }
     }
   }
 
@@ -118,7 +128,10 @@ public class LevelsMapManager : MonoBehaviour
       }
 
       if (unlockedBox != null)
+      {
         yield return StartCoroutine(unlockedBox.AnimateNewlyUnlockedLevel());
+        audioSource.PlayOneShot(unlockedAudioClip);
+      }
     }
 
   }
