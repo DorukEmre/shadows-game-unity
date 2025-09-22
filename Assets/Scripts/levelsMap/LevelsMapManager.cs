@@ -70,6 +70,11 @@ public class LevelsMapManager : MonoBehaviour
       if (pauseMenu.activeSelf)
       {
         pauseMenu.GetComponent<LevelPauseMenu>().SlideInBars();
+        audioSource.Pause();
+      }
+      else
+      {
+        audioSource.UnPause();
       }
     }
   }
@@ -105,6 +110,7 @@ public class LevelsMapManager : MonoBehaviour
       if (completedBox != null)
       {
         audioSource.PlayOneShot(completedAudioClip);
+
         yield return StartCoroutine(completedBox.AnimateNewlyCompletedLevel());
       }
     }
@@ -130,6 +136,7 @@ public class LevelsMapManager : MonoBehaviour
       if (unlockedBox != null)
       {
         yield return StartCoroutine(unlockedBox.AnimateNewlyUnlockedLevel());
+
         audioSource.PlayOneShot(unlockedAudioClip);
       }
     }

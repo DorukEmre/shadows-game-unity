@@ -201,6 +201,10 @@ public class LevelsMapBox
     float elapsed = 0f;
     while (elapsed < duration)
     {
+      // Pause effect if game is paused
+      while (isPaused)
+        yield return null;
+
       float t = elapsed / duration;
       transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
       elapsed += Time.deltaTime;
@@ -217,6 +221,10 @@ public class LevelsMapBox
     float elapsed = 0f;
     while (elapsed < duration)
     {
+      // Pause effect if game is paused
+      while (isPaused)
+        yield return null;
+
       float t = elapsed / duration;
       transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
       elapsed += Time.deltaTime;
