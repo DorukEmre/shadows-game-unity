@@ -1095,7 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6afab0fae74c51a7b77e951bf9e4022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelVictoryMenu
-  victoryClip: {fileID: 8300000, guid: cbddb104804a56b248b6cff58d244b24, type: 3}
+  victoryAudioClip: {fileID: 8300000, guid: cbddb104804a56b248b6cff58d244b24, type: 3}
 --- !u!82 &6129809804261645887
 AudioSource:
   m_ObjectHideFlags: 0

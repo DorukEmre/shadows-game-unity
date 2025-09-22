@@ -3,14 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class LevelVictoryMenu : MonoBehaviour
 {
-  [SerializeField] private AudioClip victoryClip;
+  [SerializeField] private AudioClip victoryAudioClip;
   private AudioSource audioSource;
 
   void Awake()
   {
     audioSource = GetComponent<AudioSource>();
-    if (audioSource == null)
-      Debug.LogError("AudioSource component missing from LevelVictoryMenu");
+    if (audioSource == null || victoryAudioClip == null)
+      Debug.LogError("Audio missing from LevelVictoryMenu");
   }
 
   public void LoadLevelsMap()
@@ -59,8 +59,7 @@ public class LevelVictoryMenu : MonoBehaviour
     StartCoroutine(FlickerLight(spot));
     spot.spotAngle = 28f;
 
-    if (victoryClip != null && audioSource != null)
-      audioSource.PlayOneShot(victoryClip);
+    audioSource.PlayOneShot(victoryAudioClip);
   }
 
   private System.Collections.IEnumerator FlickerLight(Light spot, float duration = 1f)
