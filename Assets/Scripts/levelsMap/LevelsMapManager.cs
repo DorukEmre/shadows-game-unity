@@ -8,6 +8,7 @@ public class LevelsMapManager : MonoBehaviour
   [SerializeField] private GameObject levelBoxesContainer;
   [SerializeField] private AudioClip completedAudioClip;
   [SerializeField] private AudioClip unlockedAudioClip;
+  [SerializeField] private AudioClip fanfareAudioClip;
   private AudioSource audioSource;
 
   private bool isPaused = false;
@@ -20,7 +21,7 @@ public class LevelsMapManager : MonoBehaviour
       Destroy(gameObject);
 
     audioSource = GetComponent<AudioSource>();
-    if (audioSource == null || completedAudioClip == null || unlockedAudioClip == null)
+    if (audioSource == null || completedAudioClip == null || unlockedAudioClip == null || fanfareAudioClip == null)
       Debug.LogError("Audio missing from LevelsMapManager");
   }
 
@@ -88,6 +89,24 @@ public class LevelsMapManager : MonoBehaviour
   {
     yield return StartCoroutine(AnimateNewlyCompletedLevelBox());
     yield return StartCoroutine(AnimateNewlyUnlockedLevelBox());
+
+    // If all levels are completed, play sound
+    if (GameManager.Instance != null && GameManager.Instance.levelStates != null)
+    {
+      bool allCompleted = true;
+      foreach (var state in GameManager.Instance.levelStates)
+      {
+        if (state != LevelState.Completed)
+        {
+          allCompleted = false;
+          break;
+        }
+      }
+      if (allCompleted)
+      {
+        audioSource.PlayOneShot(fanfareAudioClip);
+      }
+    }
   }
 
   System.Collections.IEnumerator AnimateNewlyCompletedLevelBox()

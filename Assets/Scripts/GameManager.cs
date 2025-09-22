@@ -34,13 +34,13 @@ public class GameManager : MonoBehaviour
     if (levelStates == null || levelStates.Length == 0)
     {
       Debug.Log("Initializing levelStates array with default values.");
-      levelStates = new LevelState[10];
+      levelStates = new LevelState[3];
       levelStates[0] = LevelState.Unlocked;
       for (int i = 1; i < levelStates.Length; i++)
       {
         levelStates[i] = LevelState.Locked;
       }
-      // levelStates = new LevelState[10] { LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Locked };
+      // levelStates = new LevelState[3] { LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Completed, LevelState.Unlocked, LevelState.Locked, LevelState.Locked };
     }
   }
 }
