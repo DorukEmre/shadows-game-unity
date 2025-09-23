@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
 
     if (firstTimePlaying)
     {
-      continueButtonText.color = new Color(91f / 255f, 91f / 255f, 91f / 255f, 1f);
+      continueButtonText.color = new Color(70f / 255f, 70f / 255f, 70f / 255f, 1f);
     }
   }
 
