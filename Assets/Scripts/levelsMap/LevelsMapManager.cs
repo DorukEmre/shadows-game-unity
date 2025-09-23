@@ -4,14 +4,18 @@ using UnityEngine.InputSystem;
 public class LevelsMapManager : MonoBehaviour
 {
   public static LevelsMapManager Instance;
+  private GameManager gm = GameManager.Instance;
   [SerializeField] private GameObject pauseMenu;
   [SerializeField] private GameObject levelBoxesContainer;
+  [SerializeField] private GameObject allCompletedContainer;
   [SerializeField] private AudioClip completedAudioClip;
   [SerializeField] private AudioClip unlockedAudioClip;
   [SerializeField] private AudioClip fanfareAudioClip;
   private AudioSource audioSource;
 
   private bool isPaused = false;
+  private int tempNewlyCompletedIndex = -1;
+  private int tempNewlyUnlockedIndex = -1;
 
   void Awake()
   {
@@ -27,13 +31,13 @@ public class LevelsMapManager : MonoBehaviour
 
   void Start()
   {
-    if (GameManager.Instance != null && GameManager.Instance.levelStates != null)
+    if (gm != null && gm.levelStates != null)
     {
       string levelStatus = "Level status: ";
-      for (int i = 0; i < GameManager.Instance.levelStates.Length; i++)
+      for (int i = 0; i < gm.levelStates.Length; i++)
       {
         levelStatus += (i + 1) + ": ";
-        levelStatus += GameManager.Instance.levelStates[i].ToString() + " | ";
+        levelStatus += gm.levelStates[i].ToString() + " | ";
       }
       Debug.Log(levelStatus);
     }
@@ -42,10 +46,19 @@ public class LevelsMapManager : MonoBehaviour
       Debug.LogError("GameManager or levelStates array is not properly set up");
     }
 
-    if (pauseMenu == null || levelBoxesContainer == null)
+    if (pauseMenu == null || levelBoxesContainer == null || allCompletedContainer == null)
+    {
       Debug.LogError("Error loading elements.");
+      return;
+    }
 
     pauseMenu.SetActive(false);
+    allCompletedContainer.SetActive(false);
+
+    tempNewlyCompletedIndex = gm.newlyCompletedIndex;
+    tempNewlyUnlockedIndex = gm.newlyUnlockedIndex;
+    gm.newlyCompletedIndex = -1;
+    gm.newlyUnlockedIndex = -1;
 
     StartCoroutine(AnimateLevelBoxSequence());
   }
@@ -72,6 +85,7 @@ public class LevelsMapManager : MonoBehaviour
       {
         pauseMenu.GetComponent<LevelPauseMenu>().SlideInBars();
         audioSource.Pause();
+        allCompletedContainer.SetActive(false);
       }
       else
       {
@@ -91,10 +105,10 @@ public class LevelsMapManager : MonoBehaviour
     yield return StartCoroutine(AnimateNewlyUnlockedLevelBox());
 
     // If all levels are completed, play sound
-    if (GameManager.Instance != null && GameManager.Instance.levelStates != null)
+    if (gm != null && gm.levelStates != null && gm.hasCompletedAllLevels == false)
     {
       bool allCompleted = true;
-      foreach (var state in GameManager.Instance.levelStates)
+      foreach (var state in gm.levelStates)
       {
         if (state != LevelState.Completed)
         {
@@ -104,17 +118,20 @@ public class LevelsMapManager : MonoBehaviour
       }
       if (allCompleted)
       {
+        gm.hasCompletedAllLevels = true;
         audioSource.PlayOneShot(fanfareAudioClip);
+        allCompletedContainer.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        allCompletedContainer.SetActive(false);
       }
     }
   }
 
   System.Collections.IEnumerator AnimateNewlyCompletedLevelBox()
   {
-    if (GameManager.Instance != null
-      && GameManager.Instance.newlyCompletedIndex != -1)
+    if (tempNewlyCompletedIndex != -1)
     {
-      int index = GameManager.Instance.newlyCompletedIndex;
+      int index = tempNewlyCompletedIndex;
       LevelsMapBox[] boxes = levelBoxesContainer.GetComponentsInChildren<LevelsMapBox>(true);
       LevelsMapBox completedBox = null;
       foreach (var box in boxes)
@@ -137,10 +154,9 @@ public class LevelsMapManager : MonoBehaviour
 
   System.Collections.IEnumerator AnimateNewlyUnlockedLevelBox()
   {
-    if (GameManager.Instance != null
-      && GameManager.Instance.newlyUnlockedIndex != -1)
+    if (tempNewlyUnlockedIndex != -1)
     {
-      int index = GameManager.Instance.newlyUnlockedIndex;
+      int index = tempNewlyUnlockedIndex;
       LevelsMapBox[] boxes = levelBoxesContainer.GetComponentsInChildren<LevelsMapBox>(true);
       LevelsMapBox unlockedBox = null;
       foreach (var box in boxes)

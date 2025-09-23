@@ -182,19 +182,17 @@ public class LevelsMapBox
 
   public System.Collections.IEnumerator AnimateNewlyCompletedLevel()
   {
-    gm.newlyCompletedIndex = -1;
     yield return StartCoroutine(NewlyCompletedEffect());
     setCompletedLevel();
   }
 
   public System.Collections.IEnumerator AnimateNewlyUnlockedLevel()
   {
-    gm.newlyUnlockedIndex = -1;
     yield return StartCoroutine(NewlyUnlockedEffect());
     setUnlockedLevel();
   }
 
-  private System.Collections.IEnumerator NewlyCompletedEffect(float duration = 1f)
+  private System.Collections.IEnumerator NewlyCompletedEffect(float duration = 0.8f)
   {
     Vector3 originalScale = transform.localScale;
     Vector3 targetScale = originalScale * 1.2f;
@@ -214,7 +212,7 @@ public class LevelsMapBox
 
   }
 
-  private System.Collections.IEnumerator NewlyUnlockedEffect(float duration = 1f)
+  private System.Collections.IEnumerator NewlyUnlockedEffect(float duration = 0.8f)
   {
     Vector3 originalScale = transform.localScale;
     Vector3 targetScale = originalScale * 1.2f;

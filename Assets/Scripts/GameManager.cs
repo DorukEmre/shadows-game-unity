@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
   [HideInInspector]
   public bool firstTimePlaying = true;
 
+  [HideInInspector]
+  public bool hasCompletedAllLevels = false;
+
   void Awake()
   {
     if (Instance == null)
