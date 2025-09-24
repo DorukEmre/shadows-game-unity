@@ -26,7 +26,7 @@ Players manipulate 3D objects so that their shadows form recognizable shapes to 
 
 #### GameManager
 
-Central controller for the overall game state. Manages level progression, and persistent data.
+Central controller for the overall game states. Manages level progression and persistent data.
 
 #### LevelManagers
 
