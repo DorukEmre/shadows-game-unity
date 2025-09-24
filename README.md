@@ -3,6 +3,7 @@
 A puzzle game built with Unity, inspired by *Shadowmatic*.  
 Players manipulate 3D objects so that their shadows form recognizable shapes to solve puzzles.
 
+![demo video](shadows-unity-demo.gif)
 
 ## Features
 
